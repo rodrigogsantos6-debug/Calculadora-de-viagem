@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calculadora de Custo de Viagem</title>
+<style>
+  :root{
+    --red:#e60000;
+    --blue:#1e3fd0;
+    --bg:#ffffff;
+    --text:#111111;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1a1a1a;
+      --text:#f0f0f0;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1a1a1a;
+    --text:#f0f0f0;
+  }
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Trebuchet MS", Verdana, sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .card{
+    border:5px solid var(--red);
+    border-radius:6px;
+    max-width:480px;
+    width:100%;
+    padding:24px;
+  }
+  label{
+    display:block;
+    border:3px solid var(--red);
+    border-radius:4px;
+    padding:14px 16px;
+    margin-bottom:16px;
+    font-size:1.1rem;
+    color:var(--red);
+    font-weight:bold;
+  }
+  input{
+    width:100%;
+    margin-top:8px;
+    padding:8px 10px;
+    font-size:1rem;
+    border:1px solid #999;
+    border-radius:4px;
+    background:var(--bg);
+    color:var(--text);
+    box-sizing:border-box;
+  }
+  button{
+    display:block;
+    margin:8px auto 24px;
+    border:3px solid var(--red);
+    border-radius:4px;
+    background:var(--bg);
+    color:var(--red);
+    font-size:1.1rem;
+    font-weight:bold;
+    padding:10px 30px;
+    cursor:pointer;
+  }
+  button:hover{
+    background:var(--red);
+    color:#fff;
+  }
+  #resultado{
+    text-align:center;
+    font-size:1.3rem;
+    font-weight:bold;
+    color:var(--red);
+    min-height:1.6em;
+  }
+  .formula{
+    text-align:center;
+    color:var(--blue);
+    font-weight:bold;
+    margin-top:20px;
+    font-size:1rem;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <label>Digite a distância da viagem (km)
+      <input type="number" id="distancia" step="any" placeholder="Ex: 120">
+    </label>
+    <label>Digite o consumo do veículo (km/l)
+      <input type="number" id="consumo" step="any" placeholder="Ex: 12">
+    </label>
+    <label>Digite o preço do combustível (R$)
+      <input type="number" id="preco" step="any" placeholder="Ex: 5.89">
+    </label>
+    <button id="calcular">Calcular</button>
+    <div id="resultado"></div>
+    <div class="formula">Fórmula = (distância / consumo) * preço</div>
+  </div>
+
+<script>
+//dom
+const distancia = document.querySelector('#distancia')
+const consumo = document.querySelector('#consumo')
+const preco = document.querySelector('#preco')
+const calcular = document.querySelector('#calcular')
+const resultado = document.querySelector('#resultado')
+
+//eventos
+calcular.addEventListener('click', viagem)
+
+//ação
+function viagem(){
+  const d = Number(distancia.value)
+  const c = Number(consumo.value)
+  const p = Number(preco.value)
+
+  if(!d || !c || !p){
+    resultado.textContent = 'Preencha todos os campos corretamente.'
+    return
+  }
+
+  const calculo = (d/c)*p
+  resultado.textContent = `O valor da viagem é R$ ${calculo.toFixed(2)}`
+}
+</script>
+</body>
+</html>
